@@ -1,24 +1,27 @@
 import edu.princeton.cs.algs4.RedBlackBST;
+import edu.princeton.cs.algs4.ST;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 
 public class Poi {
     private int idPoi;
-    //public static ArrayList<Integer> userID;
     private String poiName;
     private Location location;
     private PoiType poiType;
     private String details;
 
+    public RedBlackBST<Date, Log> poiLog = new RedBlackBST<>();
+
     public Poi(int idPOI, String poiName, Location location, PoiType poiType, String details) {
-        this.idPoi =  idPOI;
+        this.idPoi = idPOI;
         this.poiName = poiName;
         this.location = location;
         this.details = details;
         this.poiType = poiType;
-        if(DataBase.subredeST.contains(location.getSubrede())){
+        if (DataBase.subredeST.contains(location.getSubrede())) {
             DataBase.subredeST.put(location.getSubrede(), DataBase.subredeST.get(location.getSubrede()) + 1);
-        }else{
+        } else {
             DataBase.subredeST.put(location.getSubrede(), 1);
         }
     }
@@ -39,9 +42,11 @@ public class Poi {
         this.details = details;
     }
 
-    public int getIdPoi(){return idPoi;}
+    public int getIdPoi() {
+        return idPoi;
+    }
 
-    public void setIdPoi(int idPoi){
+    public void setIdPoi(int idPoi) {
         this.idPoi = idPoi;
     }
 
@@ -63,21 +68,28 @@ public class Poi {
 
 
     public RedBlackBST<Date, Log> getPoiLog() {
-        return DataBase.poiLog;
+        return poiLog;
     }
 
-    /*public ST<Integer, User> UsersThatVisited(Date initialDate, Date finalDate){
-        ST<Integer, User> visitantes = new ST<>();
-        for(int userID : User.userST.keys()){
-            for(Date data : User.userST.get(userID).visitedPoi.keys()){
-                if(data.afterDate(initialDate) && data.beforeDate(finalDate)){
-                    User.userST.get(userID);
-                    if(User.userST.get(userID).visitedPoi.get(data).getIdPoi() == this.idPoi){
-                        visitantes.put(userID, User.userST.get(userID));
+    /**
+     * Todos os Users que visitaram um Certo POI dentro de um Periodo de Tempo
+     * @return ST com os users que visitaram o POI
+     */
+    public ST<Integer, User> allUsersThatVisited(Date dataInicial, Date dataFinal) {
+        ST<Integer, User> users = new ST<>();
+        for (int userID : DataBase.userST.keys()) {
+            for (Date date : DataBase.userST.get(userID).visitedPoi.keys()) {
+                if(dataInicial.beforeDate(date) && dataFinal.afterDate(date)){
+                    if (DataBase.userST.get(userID).visitedPoi.get(date).getIdPoi() == this.idPoi) {
+                        users.put(userID, DataBase.userST.get(userID));
                     }
                 }
             }
         }
-        return visitantes;
-    }*/
+        return users;
+    }
+
+    public void poiNotVisited(){
+
+    }
 }

@@ -7,7 +7,6 @@ public class DataBase {
 
     public static LinearProbingHashST<Integer, User> userST = new LinearProbingHashST<>();
     public static RedBlackBST<Integer, Poi> poiST = new RedBlackBST<>();
-    public static RedBlackBST<Date, Log> poiLog = new RedBlackBST<>();
     public static ST<String, Integer> subredeST = new ST<>();
     public static ArrayList<Log> allLogs = new ArrayList<>();
 
@@ -159,6 +158,12 @@ public class DataBase {
         for (int id : poiST.keys()) {
             System.out.println("Id: " + poiST.get(id).getIdPoi() + " || Name: " + poiST.get(id).getPoiName() + " || " + poiST.get(id).getLocation() + poiST.get(id).getPoiType());
             System.out.println("Details: " + poiST.get(id).getDetails() + "\n");
+            /*if(poiST.get(id).poiLog.size() > 0){
+                System.out.println("Logs: ");
+                for(Date date : poiST.get(id).poiLog.keys()){
+                    System.out.println(poiST.get(id).poiLog.get(date).toString());
+                }
+            }*/
         }
     }
 
@@ -176,4 +181,26 @@ public class DataBase {
             System.out.println("There's no POI with that id(" + idPoi + ")!\n");
         }
     }
+
+    public static void now(Date dataInicial, Date dataFinal){
+        for(int poiID : poiST.keys()){
+            System.out.println("ID : " + poiST.get(poiID).getIdPoi() + " || Nome: " + poiST.get(poiID).getPoiName() + " || Location: " + poiST.get(poiID).getLocation().toString());
+            ST<Integer, User> user = poiST.get(poiID).allUsersThatVisited(dataInicial,dataFinal);
+            if(user.size() == 0){
+                System.out.println("\nNenhum user visitou este POI neste periodo de tempo: " + dataInicial + " - " + dataFinal + "\n");
+            }else{
+                System.out.println("\nUsers que visitaram: ");
+                for(int id : user.keys()){
+                    System.out.println("Nome: " + user.get(id).getName() + " || Type: " + user.get(id).getType());
+                }
+                System.out.println("");
+            }
+        }
+    }
+
+    public static void addLog(Log log, Poi p){
+        p.poiLog.put(log.getDate(), log);
+        allLogs.add(log);
+    }
+
 }

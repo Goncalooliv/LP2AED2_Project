@@ -28,7 +28,7 @@ public class Location implements Serializable{
 
     @Override
     public String toString() {
-        return "Latitude: " + latitude + " || Longitude: " + longitude + " || Subrede: " + subrede + "\n";
+        return "Latitude: " + latitude + " || Longitude: " + longitude + " || Subrede: " + subrede ;
     }
 
 }

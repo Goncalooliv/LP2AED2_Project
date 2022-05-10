@@ -4,10 +4,12 @@ import java.util.ArrayList;
 public class Log implements Serializable{
     private Date date;
     private String description;
+    private String userLog;
 
-    public Log (Date date, String description){
+    public Log (Date date, String description, String userLog){
         this.date = date;
         this.description = description;
+        this.userLog = userLog;
     }
 
     public Date getDate(){
@@ -20,8 +22,6 @@ public class Log implements Serializable{
 
     @Override
     public String toString() {
-        return "Log{" +
-                "date=" + date +
-                '}';
+        return "Data: " + date + ", Description: " + description + ", User: " + userLog;
     }
 }

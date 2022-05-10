@@ -25,7 +25,9 @@ public class User implements Serializable {
         return id;
     }
 
-    public void setId(int id){this.id = id;}
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -43,6 +45,10 @@ public class User implements Serializable {
         this.type = type;
     }
 
+    @Override
+    public String toString() {
+        return "Id: " + id + " || Nome: " + name + " || Type: " + type;
+    }
 
     /**
      * Adiciona um POI à Symbol Table de POI's visitados pelo utilizador
@@ -63,7 +69,8 @@ public class User implements Serializable {
         }
     }
 
-    public ST<Date, ArrayList<Poi>> showVisitedPoi(String subrede, Date dataInicial, Date dataFinal) {
+
+    public ST<Date, ArrayList<Poi>> showVisitedPoiMultiple(String subrede, Date dataInicial, Date dataFinal) {
         ST<Date, ArrayList<Poi>> visited = new ST<>();
         for (Date date : visitedPoi.keys()) {
             if (dataInicial.beforeDate(date) && dataFinal.afterDate(date)) {
@@ -77,23 +84,45 @@ public class User implements Serializable {
         return visited;
     }
 
-    public ST<Integer, ArrayList<Poi>> showNonVisitedPoi(String subrede, Date dataInicial, Date dataFinal) {
-        ST<Integer, ArrayList<Poi>> nonVisitedPoi = new ST<>();
-        for (int idPoi : DataBase.poiST.keys()) {
-            for(Date date : visitedPoi.keys()){
-                if(showVisitedPoi(subrede, dataInicial, dataFinal).contains(date)){
-                    if(!(idPoi == visitedPoi.get(date).getIdPoi())){
-                        nonVisitedPoi.put(idPoi,new ArrayList<>());
-                        nonVisitedPoi.get(idPoi).add(DataBase.poiST.get(idPoi));
-                    }
+    /**
+     * Percorre a visitedPoi e caso a data esteja entre o periodo definido retorna todos os POIs visitados no periodo de tempo
+     * Requisito 5.a
+     * @param subrede dos POIs a pesquisar
+     * @param dataInicial do periodo de tempo
+     * @param dataFinal do periodo de tempo
+     * @return POIs que verificam a condição
+     */
+    public ST<Integer, Poi> showVisitedPoi(String subrede, Date dataInicial, Date dataFinal){
+        ST<Integer, Poi> visited = new ST<>();
+        for(Date date : visitedPoi.keys()){
+            if(dataInicial.beforeDate(date) && dataFinal.afterDate(date)){
+                if (subrede.equalsIgnoreCase("global") || visitedPoi.get(date).getLocation().getSubrede().equalsIgnoreCase(subrede)) {
+                    visited.put(visitedPoi.get(date).getIdPoi(), visitedPoi.get(date));
                 }
             }
         }
-        return nonVisitedPoi;
+        return visited;
     }
 
-    public void printIntervaloTempo(Date dataInicial, Date dataFinal) {
-        System.out.println("No periodo de tempo: " + dataInicial.toString() + " - " + dataFinal.toString());
+    /**
+     * Vai ver todos os POIs que existem e se alguns dos IDs dos POIs nao estiver presente na showVisitedPoi colocamos esse Poi numa ST
+     * @param subrede dos POIs a pesquisar
+     * @param dataInicial do periodo de tempo
+     * @param dataFinal do periodo de tempo
+     * @return ST dos Pois que nao foram visitados no intervalo de tempo definido
+     */
+    public ST<Integer, Poi> showNotVisitedPoi(String subrede, Date dataInicial, Date dataFinal){
+        ST<Integer, Poi> notVisited = new ST<>();
+        for(int poiID : DataBase.poiST.keys()){
+            if(!showVisitedPoi(subrede, dataInicial, dataFinal).contains(poiID) && (subrede.equalsIgnoreCase("global") || DataBase.poiST.get(poiID).getLocation().getSubrede().equalsIgnoreCase(subrede))){
+                notVisited.put(poiID, DataBase.poiST.get(poiID));
+            }
+        }
+        return notVisited;
+    }
+
+    public void printIntervaloTempo(Date dataInicial, Date dataFinal, String subrede) {
+        System.out.println("No periodo de tempo: " + dataInicial.toString() + " - " + dataFinal.toString() + " || Subrede: " + subrede);
     }
 
 }

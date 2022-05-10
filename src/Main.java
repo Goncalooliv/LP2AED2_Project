@@ -85,31 +85,75 @@ public class Main {
 
         //=====AddVisitedPOIbyUser=====//
         user1.addVisitedPOI(2, new Date(2022, 5, 7, 23, 0, 0));
-        user1.addVisitedPOI(2, new Date(2022, 5, 15, 20, 30, 0));
+        DataBase.addLog(new Log(new Date(2022,5,7),"Fui ao Mc comer 17 hamburgueres",user1.getName()),poi2);
         user1.addVisitedPOI(4, new Date(2022, 4, 30, 18, 0, 0));
-        user1.addVisitedPOI(4, new Date(2022, 5, 7, 19, 45, 0));
+        DataBase.addLog(new Log(new Date(2022,4,30),"Fui ao dragao ver o melhor in the world",user1.getName()),poi4);
+        user2.addVisitedPOI(4, new Date(2022, 5, 19, 10, 0, 0));
+        DataBase.addLog(new Log(new Date(2022,5,19),"Final da Taça Portugal",user2.getName()),poi4);
+
+        System.out.println("=======================LOGS=========================");
+        RedBlackBST<Date, Log> logs = poi4.getPoiLog();
+        System.out.println("Logs do POI 4: ");
+        for(Date date : logs.keys()){
+            System.out.println(logs.get(date));
+        }
+
+        System.out.println("\n");
 
 
         //=====POIsVisitadosPorUmUserNumPeriodoDeTempo=====//
-        ST<Date, ArrayList<Poi>> userVisited = new ST<>();
+        //=====Requisito5a=====//
+
         Date dataInicial = new Date(2022, 4, 25);
         Date dataFinal = new Date(2022, 5, 20);
+        String subrede = "penafiel";
+
+
+        /*ST<Date, ArrayList<Poi>> userVisitedMultiple = new ST<>();
+        userVisitedMultiple = user1.showVisitedPoiMultiple(subrede, dataInicial, dataFinal);*/
+
+        ST<Integer, Poi> userVisited = new ST<>();
         System.out.println("POI's visitados por " + user1.getName() + ": ");
-        user1.printIntervaloTempo(dataInicial, dataFinal);
-        userVisited = user1.showVisitedPoi("global", dataInicial, dataFinal);
-        for (Date date : userVisited.keys()) {
-            System.out.println("ID:" + user1.visitedPoi.get(date).getIdPoi() + " || Nome: " + user1.visitedPoi.get(date).getPoiName() + " || Data: " + date);
+        user1.printIntervaloTempo(dataInicial, dataFinal,subrede);
+        userVisited = user1.showVisitedPoi(subrede, dataInicial, dataFinal);
+        for (int poiID : userVisited.keys()) {
+            System.out.println("ID:" + DataBase.poiST.get(poiID).getIdPoi() + " || Nome: " + DataBase.poiST.get(poiID).getPoiName() + " || Subrede: " + subrede);
         }
 
+
         //=====POIsNaoVisitadosPorUmUserNumPeriodoDeTempo=====//
-        ST<Integer, ArrayList<Poi>> notUserVisited = new ST<>();
+        //=====Requisito5b=====//
+
+        ST<Integer, Poi> notUserVisited = new ST<>();
         System.out.println("\n\nPOI's não visitados por " + user1.getName() + ": ");
-        user1.printIntervaloTempo(new Date(2022,4,5),new Date(2022,4,10));
-        notUserVisited = user1.showNonVisitedPoi("penafiel",new Date(2022,4,5),new Date(2022,4,10));
-        for(int id : notUserVisited){
+        user1.printIntervaloTempo(dataInicial, dataFinal, subrede);
+        notUserVisited = user1.showNotVisitedPoi(subrede, dataInicial, dataFinal);
+        for (int id : notUserVisited) {
             System.out.println("ID:" + DataBase.poiST.get(id).getIdPoi() + " || Nome: " + DataBase.poiST.get(id).getPoiName());
         }
 
+        //=====UsersQueVisitaramUmPoi=====//
+        //=====Requisito5c=====//
+
+        ST<Integer, User> usersThatVisited = new ST<>();
+        usersThatVisited = poi2.allUsersThatVisited(dataInicial, dataFinal);
+        System.out.println("\nUsers that visited POI with id: " + poi2.getIdPoi());
+        for (
+                int userID : usersThatVisited) {
+            System.out.println(usersThatVisited.get(userID).toString());
+        }
+
+        //=====POIsQueNaoForamVisitados=====//
+        /*ST<Integer, Poi> poiNotVisited = new ST<>();
+        System.out.println("POI's que nao foram visitados:");*/
+
+
+
+
+
+        //=====MetodoNow=====//
+        System.out.println("\nMétodo Now:\n");
+        DataBase.now(dataInicial,dataFinal);
 
     }
 }
