@@ -24,7 +24,7 @@ public class Main {
         Poi poi1 = new Poi(1, "Charging Station do Tribunal", new Location("penafiel", 41.20188103017641, -8.288325584019526), poiType1, "Charging Station localizada no parque de estacionamento do tribunal de Penafiel compatível com todos os veiculos eletricos!");
         Poi poi2 = new Poi(2, "McDonald's", new Location("penafiel", 41.19409386796417, -8.30180231052478), poiType4, "McDonald's de Penafiel, logo a 2 minutos da 'Rotunda Abraco do Povo'! ");
         Poi poi3 = new Poi(3, "Semáforo da Nacional 15", new Location("penafiel", 41.193791067262794, -8.30409439436035), poiType3, "Semáforo para veiculos e pedestres com sinalizador visual(temporizador) e sonoro!");
-        Poi poi4 = new Poi(4, "Universidade Fernando Pessoa", new Location("porto", 41.17284072385078, -8.6112181851571), poiType4, "Valente MERDA oubla");
+        Poi poi4 = new Poi(4, "Universidade Fernando Pessoa", new Location("porto", 41.17284072385078, -8.6112181851571), poiType4, "Estudar que é preciso");
         Poi poi5 = new Poi(5, "Boca de Incêndio do Intermarche", new Location("penafiel", 41.125405282878845, -8.29408638982938), poiType2, "Boca de incendio seca, perto do parque de estacionamento");
 
 
