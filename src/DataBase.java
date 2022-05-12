@@ -9,6 +9,7 @@ public class DataBase {
     public static RedBlackBST<Integer, Poi> poiST = new RedBlackBST<>();
     public static ST<String, Integer> subredeST = new ST<>();
     public static ArrayList<Log> allLogs = new ArrayList<>();
+    public static ArrayList<Integer> poiCount = new ArrayList<>();
 
     //================================================USER==========================================//
     //Requisito 3 (Inserir,Remover,Editar,Listar,Pesquisar)
@@ -134,7 +135,6 @@ public class DataBase {
      * @param details  contem os detalhes do Poi editado
      */
     public static void editPoiST(Poi poi, String poiName, Location location, PoiType poiType, String details) {
-        int idPoi = poi.getIdPoi();
         if (poiName != null) {
             poi.setPoiName(poiName);
         }
@@ -147,7 +147,7 @@ public class DataBase {
         if (details != null) {
             poi.setDetails(details);
         }
-        poiST.put(idPoi, poi);
+        poiST.put(poi.getIdPoi(), poi);
     }
 
     /**
@@ -182,12 +182,13 @@ public class DataBase {
         }
     }
 
-    public static void now(Date dataInicial, Date dataFinal){
+
+    public static void now(){
         for(int poiID : poiST.keys()){
             System.out.println("ID : " + poiST.get(poiID).getIdPoi() + " || Nome: " + poiST.get(poiID).getPoiName() + " || Location: " + poiST.get(poiID).getLocation().toString());
-            ST<Integer, User> user = poiST.get(poiID).allUsersThatVisited(dataInicial,dataFinal);
+            ST<Integer, User> user = poiST.get(poiID).allUsersThatVisited();
             if(user.size() == 0){
-                System.out.println("\nNenhum user visitou este POI neste periodo de tempo: " + dataInicial + " - " + dataFinal + "\n");
+                System.out.println("\nNenhum user visitou este POI\n");
             }else{
                 System.out.println("\nUsers que visitaram: ");
                 for(int id : user.keys()){
@@ -198,9 +199,35 @@ public class DataBase {
         }
     }
 
+    /*public static void now(){
+        for(int poiID : poiST.keys()){
+            System.out.println("ID : " + poiST.get(poiID).getIdPoi() + " || Nome: " + poiST.get(poiID).getPoiName() + " || Location: " + poiST.get(poiID).getLocation().toString());
+
+        }
+    }*/
+
     public static void addLog(Log log, Poi p){
         p.poiLog.put(log.getDate(), log);
         allLogs.add(log);
     }
+
+    public static void top5PoiUsedPeriod(Date dataInicial, Date dataFinal){
+        int count = 0;
+        for(int poiID : poiST.keys()){
+            for(Date data : poiST.get(poiID).poiLog.keys()){
+                if(dataInicial.beforeDate(data) && dataFinal.afterDate(data)){
+                    count++;
+                }
+            }
+            System.out.println("Poi com id: " + poiID + " foi visitado: " + count + " vezes no periodo definido");
+            poiCount.add(count);
+            count = 0;
+        }
+    }
+
+    public static void printIntervaloTempo(Date dataInicial, Date dataFinal, String subrede) {
+        System.out.println("No periodo de tempo: " + dataInicial.toString() + " - " + dataFinal.toString() + " || Subrede: " + subrede);
+    }
+
 
 }

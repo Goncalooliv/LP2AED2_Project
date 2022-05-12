@@ -5,11 +5,17 @@ public class Log implements Serializable{
     private Date date;
     private String description;
     private String userLog;
+    private Integer poiID;
 
-    public Log (Date date, String description, String userLog){
+    public Log (Date date, String description, String userLog, Integer poiID){
         this.date = date;
         this.description = description;
         this.userLog = userLog;
+        this.poiID = poiID;
+    }
+
+    public Integer getPoiID() {
+        return poiID;
     }
 
     public Date getDate(){
@@ -22,6 +28,6 @@ public class Log implements Serializable{
 
     @Override
     public String toString() {
-        return "Data: " + date + ", Description: " + description + ", User: " + userLog;
+        return "Data: " + date + ", Description: " + description + ", User: " + userLog + ", PoiID: " + poiID;
     }
 }

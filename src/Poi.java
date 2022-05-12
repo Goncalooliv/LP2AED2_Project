@@ -75,7 +75,7 @@ public class Poi {
      * Todos os Users que visitaram um Certo POI dentro de um Periodo de Tempo
      * @return ST com os users que visitaram o POI
      */
-    public ST<Integer, User> allUsersThatVisited(Date dataInicial, Date dataFinal) {
+    public ST<Integer, User> allUsersThatVisitedPeriod(Date dataInicial, Date dataFinal) {
         ST<Integer, User> users = new ST<>();
         for (int userID : DataBase.userST.keys()) {
             for (Date date : DataBase.userST.get(userID).visitedPoi.keys()) {
@@ -89,7 +89,26 @@ public class Poi {
         return users;
     }
 
-    public void poiNotVisited(){
+    //para usar para o now
+    public ST<Integer, User> allUsersThatVisited(){
+        ST<Integer,User> users = new ST<>();
+        for(int userID : DataBase.userST.keys()){
+            for(Date date : DataBase.userST.get(userID).visitedPoi.keys()){
+                if(DataBase.userST.get(userID).visitedPoi.get(date).getIdPoi() == this.idPoi){
+                    users.put(userID, DataBase.userST.get(userID));
+                }
+            }
+        }
+        return users;
+    }
 
+
+    public static void poiNotVisited(Date dataInicial, Date dataFinal){
+        for(int poiID : DataBase.poiST.keys()){
+            ST<Integer,User> user = DataBase.poiST.get(poiID).allUsersThatVisitedPeriod(dataInicial,dataFinal);
+            if(user.size() == 0){
+                System.out.println("Id: " + poiID + " || Name: " + DataBase.poiST.get(poiID).getPoiName());
+            }
+        }
     }
 }

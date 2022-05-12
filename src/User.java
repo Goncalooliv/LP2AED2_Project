@@ -59,18 +59,12 @@ public class User implements Serializable {
         if (!DataBase.poiST.contains(poiID)) {
             System.out.println("There's no POI with ID " + poiID + " on the Symbol Table");
         } else {
-            for (Date data : visitedPoi.keys()) {
-                if (visitedPoi.get(data).getIdPoi() == poiID && dataVisita == visitedPoi.keys()) {
-                    System.out.println("\nThis user already visited the POI: " + visitedPoi.get(data).getPoiName());
-                    return;
-                }
-            }
             visitedPoi.put(dataVisita, DataBase.poiST.get(poiID));
         }
     }
 
 
-    public ST<Date, ArrayList<Poi>> showVisitedPoiMultiple(String subrede, Date dataInicial, Date dataFinal) {
+    /*public ST<Date, ArrayList<Poi>> showVisitedPoiMultiple(String subrede, Date dataInicial, Date dataFinal) {
         ST<Date, ArrayList<Poi>> visited = new ST<>();
         for (Date date : visitedPoi.keys()) {
             if (dataInicial.beforeDate(date) && dataFinal.afterDate(date)) {
@@ -82,7 +76,7 @@ public class User implements Serializable {
 
         }
         return visited;
-    }
+    }*/
 
     /**
      * Percorre a visitedPoi e caso a data esteja entre o periodo definido retorna todos os POIs visitados no periodo de tempo
@@ -119,10 +113,6 @@ public class User implements Serializable {
             }
         }
         return notVisited;
-    }
-
-    public void printIntervaloTempo(Date dataInicial, Date dataFinal, String subrede) {
-        System.out.println("No periodo de tempo: " + dataInicial.toString() + " - " + dataFinal.toString() + " || Subrede: " + subrede);
     }
 
 }
