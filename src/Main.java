@@ -186,6 +186,9 @@ public class Main {
         InputOutputTxt.writeNodesToFile();
         InputOutputTxt.writeWaysToFile();
 
+        System.out.println("==========PESQUISA=DE=TAG=NUM=NODE==========");
+        DataBase.searchTagInNode("traffic_signals");
+
 
     }
 

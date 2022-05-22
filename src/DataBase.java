@@ -269,6 +269,24 @@ public class DataBase {
         }
     }
 
+    public static void searchTagInNode(String tag) {
+        for (int nodeID : nodeST.keys()) {
+            for (String s : nodeST.get(nodeID).tagST.keys()) {
+                if (nodeST.get(nodeID).tagST.get(s).contains(tag)) {
+                    System.out.println("Node: " + nodeID + " has a tag containing what you searched!");
+                    System.out.println("Tag: " + s + " || Value: " + tag);
+                }
+
+            }
+            if(nodeST.get(nodeID).tagST.contains(tag)) {
+                System.out.println("Node: " + nodeID + " has a tag containing what you searched!");
+                System.out.println("Tag: " + tag + " || Value: " + nodeST.get(nodeID).tagST.get(tag));
+            }
+
+        }
+
+    }
+
     //=======================WAY====================//
 
     public static void insertWayST(Way way) {
@@ -277,6 +295,10 @@ public class DataBase {
             return;
         }
         wayST.put(way.getId(), way);
+    }
+
+    public static void searchTagInWay(String tag){
+
     }
 
 }
