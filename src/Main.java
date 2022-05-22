@@ -86,31 +86,31 @@ public class Main {
 
         //=====AddVisitedPOIbyUser=====//
         user1.addVisitedPOI(2, new Date(2022, 5, 7, 23, 0, 0));
-        DataBase.addLog(new Log(new Date(2022,5,7,23,0,0),"Fui ao Mc comer 17 hamburgueres",user1.getName(),2),poi2);
+        DataBase.addLog(new Log(new Date(2022, 5, 7, 23, 0, 0), "Fui ao Mc comer 17 hamburgueres", user1.getName(), poi2.getIdPoi()), poi2);
 
         user1.addVisitedPOI(1, new Date(2022, 5, 14, 23, 0, 0));
-        DataBase.addLog(new Log(new Date(2022,5,14,23,0,0),"askzjfhasfhaujfha",user1.getName(),1),poi1);
+        DataBase.addLog(new Log(new Date(2022, 5, 14, 23, 0, 0), "askzjfhasfhaujfha", user1.getName(), poi1.getIdPoi()), poi1);
 
         user1.addVisitedPOI(4, new Date(2022, 4, 30, 18, 0, 0));
-        DataBase.addLog(new Log(new Date(2022,4,30,18,0,0),"Fui ao dragao ver o melhor in the world",user1.getName(),4),poi4);
+        DataBase.addLog(new Log(new Date(2022, 4, 30, 18, 0, 0), "Fui ao dragao ver o melhor in the world", user1.getName(), poi4.getIdPoi()), poi4);
 
-        user2.addVisitedPOI(2,new Date(1980,1,28,12,0,0));
-        DataBase.addLog(new Log(new Date(1980,1,28,12,0,0),"AOKHDASJDHAS",user1.getName(),2),poi2);
+        user2.addVisitedPOI(2, new Date(1980, 1, 28, 12, 0, 0));
+        DataBase.addLog(new Log(new Date(1980, 1, 28, 12, 0, 0), "Comprar gelados ao mc", user1.getName(), poi2.getIdPoi()), poi2);
 
         user2.addVisitedPOI(4, new Date(2022, 5, 19, 10, 0, 0));
-        DataBase.addLog(new Log(new Date(2022,5,19),"Final da Taça Portugal",user2.getName(),4),poi4);
+        DataBase.addLog(new Log(new Date(2022, 5, 19), "Final da Taça Portugal", user2.getName(), poi4.getIdPoi()), poi4);
 
-        user3.addVisitedPOI(4, new Date(2022,4,30,13,35,0));
-        DataBase.addLog(new Log(new Date(2022,4,30,13,35,0),"Carregar o veiculo por 45 minutos",user3.getName(),4),poi4);
+        user3.addVisitedPOI(4, new Date(2022, 4, 30, 13, 35, 0));
+        DataBase.addLog(new Log(new Date(2022, 4, 30, 13, 35, 0), "Carregar o veiculo por 45 minutos", user3.getName(), poi4.getIdPoi()), poi4);
 
-        user3.addVisitedPOI(2,new Date(2022,5,10,10,45,0));
-        DataBase.addLog(new Log(new Date(2022,5,10,10,45,0),"Comprar Panquecas",user1.getName(),2),poi2);
+        user3.addVisitedPOI(2, new Date(2022, 5, 10, 10, 45, 0));
+        DataBase.addLog(new Log(new Date(2022, 5, 10, 10, 45, 0), "Comprar Panquecas", user1.getName(), poi2.getIdPoi()), poi2);
 
 
         System.out.println("=======================LOGS=========================");
-        RedBlackBST<Date, Log> logs = poi2.getPoiLog();
-        System.out.println("Logs do POI 2: ");
-        for(Date date : logs.keys()){
+        RedBlackBST<Date, Log> logs = poi4.getPoiLog();
+        System.out.println("Logs do POI 4 : ");
+        for (Date date : logs.keys()) {
             System.out.println(logs.get(date));
         }
 
@@ -122,13 +122,13 @@ public class Main {
 
         Date dataInicial = new Date(2022, 4, 25);
         Date dataFinal = new Date(2022, 5, 20);
-        String subrede = "global";
+        String subrede = "penafiel";
 
 
-        ST<Integer, Poi> userVisited = new ST<>();
+        ST<Integer, Poi> userVisited;
         System.out.println("\nRequisito 5.a)");
         System.out.println("POI's visitados por " + user1.getName() + ": ");
-        DataBase.printIntervaloTempo(dataInicial, dataFinal,subrede);
+        DataBase.printIntervaloTempo(dataInicial, dataFinal, subrede);
         userVisited = user1.showVisitedPoi(subrede, dataInicial, dataFinal);
         for (int poiID : userVisited.keys()) {
             System.out.println("ID:" + DataBase.poiST.get(poiID).getIdPoi() + " || Nome: " + DataBase.poiST.get(poiID).getPoiName() + " || Subrede: " + DataBase.poiST.get(poiID).getLocation().getSubrede());
@@ -138,7 +138,7 @@ public class Main {
         //=====POIsNaoVisitadosPorUmUserNumPeriodoDeTempo=====//
         //=====Requisito5b=====//
 
-        ST<Integer, Poi> notUserVisited = new ST<>();
+        ST<Integer, Poi> notUserVisited;
         System.out.println("\nRequisito 5.b)");
         System.out.println("POI's não visitados por " + user1.getName() + ": ");
         DataBase.printIntervaloTempo(dataInicial, dataFinal, subrede);
@@ -150,8 +150,8 @@ public class Main {
         //=====UsersQueVisitaramUmPoiNumPeriodoDeTempo=====//
         //=====Requisito5c=====//
 
-        ST<Integer, User> usersThatVisited = new ST<>();
-        usersThatVisited = poi2.allUsersThatVisitedPeriod(dataInicial,dataFinal);
+        ST<Integer, User> usersThatVisited;
+        usersThatVisited = poi2.allUsersThatVisitedPeriod(dataInicial, dataFinal);
         System.out.println("\nRequisito 5.c)");
         System.out.println("Users that visited POI with id: " + poi2.getIdPoi());
         for (int userID : usersThatVisited.keys()) {
@@ -161,16 +161,32 @@ public class Main {
         //=====POIsQueNaoForamVisitadosNumPeriodoDeTempo=====//
         System.out.println("\nRequisito 5.d)");
         System.out.println("POIs que nao foram visitados: ");
-        DataBase.printIntervaloTempo(dataInicial,dataFinal,subrede);
-        Poi.poiNotVisited(dataInicial,dataFinal);
+        DataBase.printIntervaloTempo(dataInicial, dataFinal, subrede);
+        Poi.poiNotVisited(dataInicial, dataFinal);
 
         //DataBase.top5PoiUsedPeriod(dataInicial,dataFinal);
-
 
 
         //=====MetodoNow=====//
         System.out.println("\nMétodo Now:\n");
         DataBase.now();
 
+        //=====LerInputDoTxt=====//
+        InputOutputTxt.readNodesFromFile();
+        System.out.println("\n");
+        InputOutputTxt.readWaysFromFile();
+        //Node node1 = DataBase.nodeST.get(1);
+        //DataBase.removeNodeST(node1);
+        //System.out.println("===============================");
+        //System.out.println(DataBase.nodeST.get(1).toString());
+        /*for(String s : DataBase.nodeST.get(1).tagST.keys()){
+            System.out.println("Tags do Node " + DataBase.nodeST.get(1).getId() + " : " + s + " Valor: " + DataBase.nodeST.get(1).tagST.get(s));
+        }*/
+        //DataBase.printNodeST();
+        InputOutputTxt.writeNodesToFile();
+        InputOutputTxt.writeWaysToFile();
+
+
     }
+
 }

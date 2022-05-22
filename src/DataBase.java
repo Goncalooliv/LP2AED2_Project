@@ -11,6 +11,9 @@ public class DataBase {
     public static ArrayList<Log> allLogs = new ArrayList<>();
     public static ArrayList<Integer> poiCount = new ArrayList<>();
 
+    public static RedBlackBST<Integer, Node> nodeST = new RedBlackBST<>();
+    public static RedBlackBST<Integer, Way> wayST = new RedBlackBST<>();
+
     //================================================USER==========================================//
     //Requisito 3 (Inserir,Remover,Editar,Listar,Pesquisar)
 
@@ -183,15 +186,15 @@ public class DataBase {
     }
 
 
-    public static void now(){
-        for(int poiID : poiST.keys()){
+    public static void now() {
+        for (int poiID : poiST.keys()) {
             System.out.println("ID : " + poiST.get(poiID).getIdPoi() + " || Nome: " + poiST.get(poiID).getPoiName() + " || Location: " + poiST.get(poiID).getLocation().toString());
             ST<Integer, User> user = poiST.get(poiID).allUsersThatVisited();
-            if(user.size() == 0){
+            if (user.size() == 0) {
                 System.out.println("\nNenhum user visitou este POI\n");
-            }else{
+            } else {
                 System.out.println("\nUsers que visitaram: ");
-                for(int id : user.keys()){
+                for (int id : user.keys()) {
                     System.out.println("Nome: " + user.get(id).getName() + " || Type: " + user.get(id).getType());
                 }
                 System.out.println("");
@@ -206,12 +209,12 @@ public class DataBase {
         }
     }*/
 
-    public static void addLog(Log log, Poi p){
+    public static void addLog(Log log, Poi p) {
         p.poiLog.put(log.getDate(), log);
         allLogs.add(log);
     }
 
-    public static void top5PoiUsedPeriod(Date dataInicial, Date dataFinal){
+    /*public static void top5PoiUsedPeriod(Date dataInicial, Date dataFinal){
         int count = 0;
         for(int poiID : poiST.keys()){
             for(Date data : poiST.get(poiID).poiLog.keys()){
@@ -223,11 +226,57 @@ public class DataBase {
             poiCount.add(count);
             count = 0;
         }
-    }
+    }*/
 
     public static void printIntervaloTempo(Date dataInicial, Date dataFinal, String subrede) {
         System.out.println("No periodo de tempo: " + dataInicial.toString() + " - " + dataFinal.toString() + " || Subrede: " + subrede);
     }
 
+    //=======================NODE====================//
+
+    public static void insertNodeST(Node node) {
+        if (nodeST.contains(node.getId())) {
+            System.out.println("Node with id " + node.getId() + " already exists!");
+            return;
+        }
+        nodeST.put(node.getId(), node);
+    }
+
+    public static void printNodeST() {
+        System.out.println("\nNode Symbol Table:\n");
+        for (int id : nodeST.keys()) {
+            System.out.println("Id: " + nodeST.get(id).getId() + "\tLatitude: " + nodeST.get(id).getLatitude() + "\tLongitude: " + nodeST.get(id).getLongitude());
+            for (String s : nodeST.get(id).tagST.keys()) {
+                System.out.println("Key : " + s + " || Value: " + nodeST.get(id).tagST.get(s));
+            }
+        }
+    }
+
+    public static void removeNodeST(Node node) {
+        if (nodeST.contains(node.getId())) {
+            System.out.println("Vai ser removido o node com id: " + node.getId());
+            for (String s : nodeST.get(node.getId()).tagST.keys()) {
+                nodeST.get(node.getId()).tagST.delete(s);
+            }
+            for (int wayID : wayST.keys()) {
+                if (wayST.get(wayID).getIdNodeInicial() == node.getId() || wayST.get(wayID).getIdNodeFinal() == node.getId()) {
+                    wayST.delete(wayID);
+                }
+            }
+            nodeST.delete(node.getId());
+        } else {
+            System.out.println("Este node não existe na ST");
+        }
+    }
+
+    //=======================WAY====================//
+
+    public static void insertWayST(Way way) {
+        if (wayST.contains(way.getId())) {
+            System.out.println("Way with id " + way.getId() + " already exists!");
+            return;
+        }
+        wayST.put(way.getId(), way);
+    }
 
 }
