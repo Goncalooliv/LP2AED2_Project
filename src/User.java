@@ -8,7 +8,7 @@ public class User implements Serializable {
     private String name;
     private Type type;
 
-    public RedBlackBST<Date, Poi> visitedPoi = new RedBlackBST<>();
+    public RedBlackBSTProj<Date, Poi> visitedPoi = new RedBlackBSTProj<>();
 
     public User(String name, Type type) {
         this.name = name;

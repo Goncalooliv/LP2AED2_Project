@@ -30,6 +30,8 @@ import edu.princeton.cs.algs4.LinkedBag;
 import edu.princeton.cs.algs4.ResizingArrayBag;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
+
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -53,12 +55,12 @@ import java.util.NoSuchElementException;
  *
  *  @param <Item> the generic type of an item in this bag
  */
-public class BagProj<Item> implements Iterable<Item> {
+public class BagProj<Item> implements Serializable,Iterable<Item> {
     private Node<Item> first;    // beginning of bag
     private int n;               // number of elements in bag
 
     // helper linked list class
-    private static class Node<Item> {
+    private static class Node<Item> implements Serializable {
         private Item item;
         private Node<Item> next;
     }
@@ -114,7 +116,7 @@ public class BagProj<Item> implements Iterable<Item> {
     }
 
     // an iterator, doesn't implement remove() since it's optional
-    private class LinkedIterator implements Iterator<Item> {
+    private class LinkedIterator implements Iterator<Item>, Serializable {
         private Node<Item> current;
 
         public LinkedIterator(Node<Item> first) {
@@ -131,25 +133,6 @@ public class BagProj<Item> implements Iterable<Item> {
             return item;
         }
     }
-
-    /**
-     * Unit tests the {@code Bag} data type.
-     *
-     * @param args the command-line arguments
-     */
-    public static void main(String[] args) {
-        BagProj<String> bagProj = new BagProj<String>();
-        while (!StdIn.isEmpty()) {
-            String item = StdIn.readString();
-            bagProj.add(item);
-        }
-
-        StdOut.println("size of bag = " + bagProj.size());
-        for (String s : bagProj) {
-            StdOut.println(s);
-        }
-    }
-
 }
 
 /******************************************************************************

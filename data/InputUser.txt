@@ -1,0 +1,9 @@
+8
+1,Goncalo,admin
+2,Diogo,admin
+3,Afonso,basic
+4,Maria,basic
+5,Raquel,basic
+6,Vasco,basic
+7,Joao,basic
+8,Diana,basic

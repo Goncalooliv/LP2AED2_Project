@@ -7,6 +7,9 @@
  *
  ******************************************************************************/
 import edu.princeton.cs.algs4.*;
+
+import java.io.Serializable;
+
 /**
  *  The {@code DirectedEdge} class represents a weighted edge in an
  *  {@link EdgeWeightedDigraphProj}. Each edge consists of two integers
@@ -22,28 +25,30 @@ import edu.princeton.cs.algs4.*;
  *  @author Kevin Wayne
  */
 
-public class DirectedEdgeProj {
+public class DirectedEdgeProj implements Serializable {
     private final int v;
     private final int w;
-    private final double weight;
+    private final double distance;
+    private final double averageTime;
 
     /**
      * Initializes a directed edge from vertex {@code v} to vertex {@code w} with
      * the given {@code weight}.
      * @param v the tail vertex
      * @param w the head vertex
-     * @param weight the weight of the directed edge
+     * @param distance the weight of the directed edge
      * @throws IllegalArgumentException if either {@code v} or {@code w}
      *    is a negative integer
      * @throws IllegalArgumentException if {@code weight} is {@code NaN}
      */
-    public DirectedEdgeProj(int v, int w, double weight) {
+    public DirectedEdgeProj(int v, int w, double distance, double averageTime) {
         if (v < 0) throw new IllegalArgumentException("Vertex names must be non-negative integers");
         if (w < 0) throw new IllegalArgumentException("Vertex names must be non-negative integers");
-        if (Double.isNaN(weight)) throw new IllegalArgumentException("Weight is NaN");
+        if (Double.isNaN(distance)) throw new IllegalArgumentException("Weight is NaN");
         this.v = v;
         this.w = w;
-        this.weight = weight;
+        this.distance = distance;
+        this.averageTime = averageTime;
     }
 
     /**
@@ -66,27 +71,27 @@ public class DirectedEdgeProj {
      * Returns the weight of the directed edge.
      * @return the weight of the directed edge
      */
-    public double weight() {
-        return weight;
+    public double getDistance() {
+        return distance;
+    }
+
+    /**
+     * Returns the Average Time of the directed edge.
+     * @return the time of the directed edge
+     */
+    public double getAverageTime(){
+        return averageTime;
     }
 
     /**
      * Returns a string representation of the directed edge.
      * @return a string representation of the directed edge
+     *
      */
     public String toString() {
-        return v + "->" + w + " " + String.format("%5.2f", weight);
+        return v + "->" + w + " " + "Distance(meters): " + String.format("%5.2f", distance) + " || Average time(minutes): " + String.format("%5.2f",averageTime) + "   |//|";
     }
 
-    /**
-     * Unit tests the {@code DirectedEdge} data type.
-     *
-     * @param args the command-line arguments
-     */
-    public static void main(String[] args) {
-        DirectedEdgeProj e = new DirectedEdgeProj(12, 34, 5.67);
-        StdOut.println(e);
-    }
 }
 
 /******************************************************************************

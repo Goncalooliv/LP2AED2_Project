@@ -1,29 +1,25 @@
 import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.ST;
 
-import javax.xml.crypto.Data;
-import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Poi {
+
+public class Poi extends Node implements Serializable {
     private int idPoi;
     private String poiName;
     private Location location;
     private PoiType poiType;
     private String details;
 
-    public RedBlackBST<Date, Log> poiLog = new RedBlackBST<>();
+    public RedBlackBSTProj<Date, Log> poiLog = new RedBlackBSTProj<>();
 
-    public Poi(int idPOI, String poiName, Location location, PoiType poiType, String details) {
-        this.idPoi = idPOI;
+
+    public Poi(int idPOI, String poiName, Location location, PoiType type) {
+        super(idPOI,poiName,location, type);
         this.poiName = poiName;
         this.location = location;
-        this.details = details;
-        this.poiType = poiType;
-        if (DataBase.subredeST.contains(location.getSubrede())) {
-            DataBase.subredeST.put(location.getSubrede(), DataBase.subredeST.get(location.getSubrede()) + 1);
-        } else {
-            DataBase.subredeST.put(location.getSubrede(), 1);
-        }
+        this.poiType = type;
+        //this.details = details;
     }
 
     public PoiType getPoiType() {
@@ -67,7 +63,7 @@ public class Poi {
     }
 
 
-    public RedBlackBST<Date, Log> getPoiLog() {
+    public RedBlackBSTProj<Date, Log> getPoiLog() {
         return poiLog;
     }
 

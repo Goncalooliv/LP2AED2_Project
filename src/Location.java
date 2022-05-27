@@ -31,4 +31,8 @@ public class Location implements Serializable{
         return "Latitude: " + latitude + " || Longitude: " + longitude + " || Subrede: " + subrede ;
     }
 
+    public String toStringtxt(){
+        return latitude + "," + longitude + "," + subrede;
+    }
+
 }

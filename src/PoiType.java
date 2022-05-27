@@ -1,4 +1,6 @@
-public class PoiType {
+import java.io.Serializable;
+
+public class PoiType implements Serializable {
     public String poiType;
 
     public PoiType(String poiType) {
@@ -16,5 +18,9 @@ public class PoiType {
     @Override
     public String toString() {
         return "|| Poi Type: " + poiType;
+    }
+
+    public String toStringTXT(){
+        return poiType;
     }
 }

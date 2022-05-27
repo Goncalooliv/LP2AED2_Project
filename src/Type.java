@@ -16,7 +16,7 @@ public enum Type {
     public static Type stringToType(String typeInString) {
         for (Type type : Type.values()) {
             if (type.typeInString.equalsIgnoreCase(typeInString)) {
-                System.out.println("boas " + type);
+                return type;
             }
         }
         return null;

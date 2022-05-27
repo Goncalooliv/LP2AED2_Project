@@ -1,20 +1,39 @@
 import edu.princeton.cs.algs4.RedBlackBST;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Node {
+public class Node implements Serializable {
     private int id;
-    private double latitude;
-    private double longitude;
+    private String name;
+    private Location location;
+    private PoiType type;
 
-    RedBlackBST<String,String> tagST = new RedBlackBST<>();
+    RedBlackBSTProj<String, String> tagST = new RedBlackBSTProj<>();
     ArrayList<String> tagArray = new ArrayList<>();
 
-    public Node(int id, double latitude, double longitude) {
+    public Node(int id,String name, Location location, PoiType type) {
         this.id = id;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.name = name;
+        this.location = location;
+        this.type = type;
+    }
+
+    public PoiType getType() {
+        return type;
+    }
+
+    public void setType(PoiType type) {
+        this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getId() {
@@ -25,24 +44,16 @@ public class Node {
         this.id = id;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     @Override
     public String toString() {
-        return "Node " + id + " || Latitude: " + latitude + " || Longitude: " + longitude;
+        return "Id: " + id + " || Nome: " + name + " || Location " + location;
     }
 }

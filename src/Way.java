@@ -1,21 +1,24 @@
 import edu.princeton.cs.algs4.RedBlackBST;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Way {
+public class Way extends DirectedEdgeProj implements Serializable {
     private int id;
     private int idNodeInicial;
     private int idNodeFinal;
-    private double weight;
+    private double distance;
+    private double averageTime;
 
-    RedBlackBST<String,String> tagST = new RedBlackBST<>();
+    RedBlackBSTProj<String,String> tagST = new RedBlackBSTProj<>();
     ArrayList<String> tagArray = new ArrayList<>();
 
-    public Way(int id, int idNodeInicial, int idNodeFinal, double weight) {
+    public Way(int id, int idNodeInicial, int idNodeFinal, double distance, double averageTime) {
+        super(idNodeInicial,idNodeFinal,distance,averageTime);
         this.id = id;
         this.idNodeInicial = idNodeInicial;
         this.idNodeFinal = idNodeFinal;
-        this.weight = weight;
+        this.distance = distance;
     }
 
     public int getId() {
@@ -42,11 +45,11 @@ public class Way {
         this.idNodeFinal = idNodeFinal;
     }
 
-    public double getWeight() {
-        return weight;
+    public double getDistance() {
+        return distance;
     }
 
-    public void setWeight(double weight) {
-        this.weight = weight;
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 }
