@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<AnchorPane prefHeight="650.0" prefWidth="900.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controller">
+    <children>
+        <TabPane prefHeight="624.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Grafo">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="900.0" prefHeight="586.0">
+                            <children>
+                                <Group fx:id="graphGroup"/>
+                                <HBox layoutY="445.0" prefHeight="32.0" prefWidth="900.0">
+                                    <children>
+                                        <VBox prefHeight="594.0" prefWidth="900.0">
+                                            <HBox prefHeight="50.0" prefWidth="886.0" spacing="5.0">
+                                                <TextField fx:id="addInitialNode" prefHeight="28.0" prefWidth="148.0"
+                                                           promptText="Initial Node">
+                                                    <HBox.margin>
+                                                        <Insets/>
+                                                    </HBox.margin>
+                                                </TextField>
+                                                <TextField fx:id="addToField" prefHeight="28.0" prefWidth="148.0"
+                                                           promptText="Final Node">
+                                                    <HBox.margin>
+                                                        <Insets left="5.0"/>
+                                                    </HBox.margin>
+                                                </TextField>
+                                                <TextField fx:id="addWeightField" prefHeight="28.0" prefWidth="148.0"
+                                                           promptText="Weight">
+                                                    <HBox.margin>
+                                                        <Insets left="5.0"/>
+                                                    </HBox.margin>
+                                                </TextField>
+                                                <TextField fx:id="addTimeField" prefHeight="28.0" prefWidth="148.0"
+                                                           promptText="Time">
+                                                    <HBox.margin>
+                                                        <Insets left="5.0"/>
+                                                    </HBox.margin>
+                                                </TextField>
+                                                <Button mnemonicParsing="false" onAction="#handleAddEdgeToGrafo" text="Add Way">
+                                                    <HBox.margin>
+                                                        <Insets left="10.0"/>
+                                                    </HBox.margin>
+                                                </Button>
+                                            </HBox>
+                                            <HBox prefHeight="50.0" prefWidth="886.0" spacing="5.0">
+                                                <children>
+
+                                                </children>
+                                            </HBox>
+                                        </VBox>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Users">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="900.0" prefHeight="586.0">
+                            <children>
+                                <VBox prefHeight="594.0" prefWidth="900.0">
+                                    <TableView fx:id="userTableView" prefHeight="575.0" prefWidth="885.0">
+                                        <columns>
+                                            <TableColumn fx:id="nameTableColumn" onEditCommit="#handleEditUser"
+                                                         prefWidth="100.0" text="Name"/>
+                                            <TableColumn fx:id="typeTableColumn" onEditCommit="#handleEditUser"
+                                                         text="Type"/>
+                                        </columns>
+                                    </TableView>
+                                    <HBox prefHeight="50.0" prefWidth="886.0" spacing="5.0">
+                                        <children>
+                                            <TextField fx:id="nameField" prefWidth="152.0" promptText="Name">
+                                                <opaqueInsets>
+                                                    <Insets/>
+                                                </opaqueInsets>
+                                            </TextField>
+                                            <TextField fx:id="typeField" prefWidth="152.0" promptText="Type">
+                                                <HBox.margin>
+                                                    <Insets left="10.0"/>
+                                                </HBox.margin>
+                                            </TextField>
+                                            <Button mnemonicParsing="false" onAction="#handleInputUserFile"
+                                                    text="ImportTXT">
+                                                <HBox.margin>
+                                                    <Insets left="10.0"/>
+                                                </HBox.margin>
+                                            </Button>
+                                            <Button mnemonicParsing="false" onAction="#handleOutputUserFile"
+                                                    text="ExportTXT">
+                                                <HBox.margin>
+                                                    <Insets left="10.0"/>
+                                                </HBox.margin>
+                                            </Button>
+                                            <Button mnemonicParsing="false" onAction="#handleInputBinUserFile"
+                                                    text="ImportBIN">
+                                                <HBox.margin>
+                                                    <Insets left="10.0"/>
+                                                </HBox.margin>
+                                            </Button>
+                                            <Button mnemonicParsing="false" onAction="#handleOutputBinUserFile"
+                                                    text="ExportBin">
+                                                <HBox.margin>
+                                                    <Insets left="10.0"/>
+                                                </HBox.margin>
+                                            </Button>
+                                            <Button mnemonicParsing="false" onAction="#handleAddUser" text="Add User">
+                                                <HBox.margin>
+                                                    <Insets left="10.0"/>
+                                                </HBox.margin>
+                                            </Button>
+                                            <Button mnemonicParsing="false" onAction="#handleRemoveUser"
+                                                    text="Remove User">
+                                                <HBox.margin>
+                                                    <Insets left="10.0"/>
+                                                </HBox.margin>
+                                            </Button>
+                                        </children>
+                                    </HBox>
+                                </VBox>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="POIs">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="900.0" prefHeight="586.0">
+                            <children>
+                                <VBox prefHeight="594.0" prefWidth="900.0">
+                                    <TableView fx:id="poiTableView" prefHeight="575.0" prefWidth="885.0">
+                                        <columns>
+                                            <TableColumn fx:id="poiNameTableColumn" onEditCommit="#handleEditPoi"
+                                                         prefWidth="100.0" text="Poi Name"/>
+                                            <TableColumn fx:id="poiLocationTableColumn" onEditCommit="#handleEditPoi"
+                                                         prefWidth="300.0" text="Location"/>
+                                            <TableColumn fx:id="poiTypeTableColumn" onEditCommit="#handleEditPoi"
+                                                         prefWidth="300.0" text="Type"/>
+                                        </columns>
+                                    </TableView>
+                                    <HBox prefHeight="50.0" prefWidth="886.0" spacing="5.0">
+                                        <children>
+                                            <TextField fx:id="poiNameField" prefWidth="152.0" promptText="Poi Name">
+                                                <opaqueInsets>
+                                                    <Insets/>
+                                                </opaqueInsets>
+                                            </TextField>
+                                            <TextField fx:id="poiLocationField" prefWidth="152.0" promptText="Location">
+                                                <HBox.margin>
+                                                    <Insets left="10.0"/>
+                                                </HBox.margin>
+                                            </TextField>
+                                            <Button mnemonicParsing="false" onAction="#handleInputPoiFile"
+                                                    text="ImportTxt">
+                                                <HBox.margin>
+                                                    <Insets left="10.0"/>
+                                                </HBox.margin>
+                                            </Button>
+                                            <Button mnemonicParsing="false" onAction="#handleOutputPoiFile"
+                                                    text="ExportTXT">
+                                                <HBox.margin>
+                                                    <Insets left="10.0"/>
+                                                </HBox.margin>
+                                            </Button>
+                                            <Button mnemonicParsing="false" onAction="#handleInputBinPoiFile"
+                                                    text="ImportBIN">
+                                                <HBox.margin>
+                                                    <Insets left="10.0"/>
+                                                </HBox.margin>
+                                            </Button>
+                                            <Button mnemonicParsing="false" onAction="#handleOutputBinPoiFile"
+                                                    text="ExportBIN">
+                                                <HBox.margin>
+                                                    <Insets left="10.0"/>
+                                                </HBox.margin>
+                                            </Button>
+                                            <Button mnemonicParsing="false" onAction="#handleAddUser" text="Add Poi">
+                                                <HBox.margin>
+                                                    <Insets left="10.0"/>
+                                                </HBox.margin>
+                                            </Button>
+                                            <Button mnemonicParsing="false" onAction="#handleRemovePoi"
+                                                    text="Remove Poi">
+                                                <HBox.margin>
+                                                    <Insets left="10.0"/>
+                                                </HBox.margin>
+                                            </Button>
+                                        </children>
+                                    </HBox>
+                                </VBox>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
+</AnchorPane>
