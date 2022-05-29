@@ -2,11 +2,13 @@ import edu.princeton.cs.algs4.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class DataBase implements Serializable {
 
-    public static LinearProbingHashST<Integer, User> userST = new LinearProbingHashST<>();
+    public static ST<Integer, User> userST = new ST<>();
     public static RedBlackBSTProj<Integer, Poi> poiST = new RedBlackBSTProj<>();
     //public static ST<String, Integer> subredeST = new ST<>();
     public static ArrayList<Log> allLogs = new ArrayList<>();
@@ -14,6 +16,10 @@ public class DataBase implements Serializable {
 
     public static RedBlackBSTProj<Integer, Node> nodeST = new RedBlackBSTProj<>();
     public static RedBlackBSTProj<Integer, Way> wayST = new RedBlackBSTProj<>();
+    public static ArrayList<String> topPoiOrdered = new ArrayList<>();
+    public static ArrayList<String> topUserOrdered = new ArrayList<>();
+    public static ArrayList<String> top5Poi = new ArrayList<>();
+    public static ArrayList<String> top5User = new ArrayList<>();
 
     //================================================USER==========================================//
     //Requisito 3 (Inserir,Remover,Editar,Listar,Pesquisar)
@@ -124,6 +130,23 @@ public class DataBase implements Serializable {
         if (poiST.contains(poi.getIdPoi())) {
             poiST.delete(poi.getIdPoi());
             System.out.println("Poi with id: " + poi.getIdPoi() + " || Nome: " + poi.getPoiName() + ", vai ser eliminado da ST!");
+            for (int idUser : userST.keys()) {
+                for (Date date : userST.get(idUser).visitedPoi.keys()) {
+                    if (userST.get(idUser).visitedPoi.get(date).getIdPoi() == poi.getIdPoi()) {
+                        userST.get(idUser).visitedPoi.delete(date);
+                    }
+                }
+            }
+            for (int nodeID : nodeST.keys()) {
+                if (nodeST.get(nodeID).getId() == poi.getIdPoi()) {
+                    nodeST.delete(nodeID);
+                }
+            }
+            for(int wayID : wayST.keys()){
+                if(wayST.get(wayID).getIdNodeInicial() == poi.getIdPoi() || wayST.get(wayID).getIdNodeFinal() == poi.getIdPoi()){
+                    wayST.delete(wayID);
+                }
+            }
         } else {
             System.out.println("The Symbol Table doesn't have any Poi with the ID: " + poi.getIdPoi());
         }
@@ -219,19 +242,50 @@ public class DataBase implements Serializable {
         allLogs.add(log);
     }
 
-    /*public static void top5PoiUsedPeriod(Date dataInicial, Date dataFinal){
-        int count = 0;
-        for(int poiID : poiST.keys()){
-            for(Date data : poiST.get(poiID).poiLog.keys()){
-                if(dataInicial.beforeDate(data) && dataFinal.afterDate(data)){
-                    count++;
-                }
-            }
-            System.out.println("Poi com id: " + poiID + " foi visitado: " + count + " vezes no periodo definido");
-            poiCount.add(count);
-            count = 0;
+    /**
+     * Imprime os 5 POIs que mais visitas tiveram, ordenados de forma decrescente
+     * @param dataInicial
+     * @param dataFinal
+     */
+    public static void top5PoiUsedPeriod(Date dataInicial, Date dataFinal) {
+        int i = 0;
+        for (int poiID : poiST.keys()) {
+            topPoiOrdered.add("Visitas: " + poiST.get(poiID).poiLog.size() + " " + poiST.get(poiID).getPoiName());
         }
-    }*/
+        topPoiOrdered.sort(Collections.reverseOrder());
+        System.out.println(topPoiOrdered);
+
+        while (i != 5) {
+            top5Poi.add(i, topPoiOrdered.get(i));
+            i++;
+        }
+
+        System.out.println("Top 5 POIs mais visitados: " + top5Poi);
+        System.out.println("===============ARRAY==============");
+    }
+
+    /**
+     * Imprime os 5 Users que visitaram um maior numero de POIs, ordenados de forma decrescente
+     * @param dataInicial
+     * @param dataFinal
+     */
+    public static void top5UsersVisitedPoi(Date dataInicial, Date dataFinal) {
+        int i = 0;
+        for (int userID : userST.keys()) {
+            topUserOrdered.add("Visitou: " + userST.get(userID).visitedPoi.size() + " pois! User: " + userST.get(userID).getName());
+        }
+
+        topUserOrdered.sort(Collections.reverseOrder());
+        System.out.println(topUserOrdered);
+
+        while (i != 5) {
+            top5User.add(i, topUserOrdered.get(i));
+            i++;
+        }
+
+        System.out.println("Top 5 Users que visitaram mais POIs: " + top5User);
+        System.out.println("===============ARRAY==============");
+    }
 
     /**
      * Metodo usado apenas para aspeto visual, que imprime o intervalo de tempo das pesquisas do requisito 5
@@ -249,6 +303,7 @@ public class DataBase implements Serializable {
     /**
      * Metodo para inserir Nodes na ST
      * Verifica se o ID já existe, caso exista
+     *
      * @param node a inserir na ST
      */
     public static void insertNodeST(Node node) {
@@ -276,6 +331,7 @@ public class DataBase implements Serializable {
      * Metodo usado para remover um Node da ST
      * E para assegurar uma coerencia no sistema vê tambem se o node que queremos remover está presente na ST de Ways
      * Caso esteja presente remove-mos tambem da ST das Ways, uma vez que não há uma way entre um node X e um node nao existente
+     *
      * @param node que pretendemos remover da ST
      */
     public static void removeNodeST(Node node) {
@@ -295,17 +351,24 @@ public class DataBase implements Serializable {
         }
     }
 
-    public static void editNodeST(Node node, String poiName, Location location, PoiType type){
-        if(poiName != null){
+    /**
+     * Edita os atributos dos Nodes Existentes
+     * @param node que pretendemos alterar
+     * @param poiName a alterar
+     * @param location a alterar
+     * @param type a alterar
+     */
+    public static void editNodeST(Node node, String poiName, Location location, PoiType type) {
+        if (poiName != null) {
             node.setName(poiName);
         }
-        if(location != null){
+        if (location != null) {
             node.setLocation(location);
         }
-        if(type != null){
+        if (type != null) {
             node.setType(type);
         }
-        nodeST.put(node.getId(),node);
+        nodeST.put(node.getId(), node);
         poiST.put(node.getId(), (Poi) node);
     }
 
@@ -333,9 +396,13 @@ public class DataBase implements Serializable {
 
     }
 
-    public static void searchTypeInNode(String type){
-        for(int nodeID : nodeST.keys()){
-            if(nodeST.get(nodeID).getType().toStringTXT().equalsIgnoreCase(type)){
+    /**
+     * Pesquisa pelo tipo de poi nos nodes lidos do ficheiro de texto
+     * @param type
+     */
+    public static void searchTypeInNode(String type) {
+        for (int nodeID : nodeST.keys()) {
+            if (nodeST.get(nodeID).getType().toStringTXT().equalsIgnoreCase(type)) {
                 System.out.println("Node: " + nodeID + " has what you searched for!");
                 System.out.println("-> " + type);
             }
@@ -380,20 +447,30 @@ public class DataBase implements Serializable {
         }
     }
 
+    /**
+     * Usado no controller para dar clear à ST de users (para nao ler repetido)
+     */
     public static void clearUser() {
         for (int userID : userST.keys()) {
             deleteUserST(userST.get(userID));
         }
     }
 
-    public static void clearPoi(){
-        for(int poiID : poiST.keys()){
+    /**
+     * Usado no controller para dar clear à ST de POIs(para nao ler repetido)
+     */
+    public static void clearPoi() {
+        for (int poiID : poiST.keys()) {
             deletePoiST(poiST.get(poiID));
         }
     }
 
-
-
+    /**
+     * Método para calcular o shortest path entre um vertice e outro
+     * @param v1
+     * @param v2
+     * @param ed
+     */
     public static void shortestPath(int v1, int v2, EdgeWeightedDigraphProj ed) {
         DijkstraSPProj dijkstra = new DijkstraSPProj(ed, v1, 2);
 

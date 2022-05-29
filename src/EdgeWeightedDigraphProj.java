@@ -237,6 +237,12 @@ public class EdgeWeightedDigraphProj implements Serializable {
         }
     }
 
+    /**
+     * Depth First Search usado para atravessar o grafo.
+     * Começa no vertice source , marca o node como visitado e passa para um vertice adjacente nao marcado como visitado
+     * Usamos isto no metodo isConnected para ver se o grafo é ou nao conexo
+     *
+     */
     public void DFS(int source, LinkedList<Integer>[] adjacencyList, boolean[] visited){
 
         // Mark the vertex visited as True

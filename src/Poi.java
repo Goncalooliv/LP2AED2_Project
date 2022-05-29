@@ -85,7 +85,11 @@ public class Poi extends Node implements Serializable {
         return users;
     }
 
-    //para usar para o now
+    /**
+     * Todos os users que visitaram um Poi
+     * Utilizado no metodo Now()
+     * @return
+     */
     public ST<Integer, User> allUsersThatVisited(){
         ST<Integer,User> users = new ST<>();
         for(int userID : DataBase.userST.keys()){
@@ -98,7 +102,11 @@ public class Poi extends Node implements Serializable {
         return users;
     }
 
-
+    /**
+     * Todos os POIs que não foram visitados num periodo de tempo
+     * @param dataInicial
+     * @param dataFinal
+     */
     public static void poiNotVisited(Date dataInicial, Date dataFinal){
         for(int poiID : DataBase.poiST.keys()){
             ST<Integer,User> user = DataBase.poiST.get(poiID).allUsersThatVisitedPeriod(dataInicial,dataFinal);

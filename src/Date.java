@@ -55,14 +55,29 @@ public class Date implements Comparable<Date>, Serializable {
         this.second = g.get(Calendar.SECOND);
     }
 
+    /**
+     * Compara uma data para ver se uma data é antes que a data D
+     * @param d
+     * @return
+     */
     public boolean beforeDate(Date d) {
         return this.compareTo(d) < 0;
     }
 
+    /**
+     * Compara uma data para ver se essa data é depois da data D
+     * @param d
+     * @return
+     */
     public boolean afterDate(Date d) {
         return this.compareTo(d) > 0;
     }
 
+    /**
+     * Vê se um dado ano é bissexto
+     * @param year
+     * @return
+     */
     public static boolean isLeapYear(int year) {
         return ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0));
     }

@@ -26,15 +26,22 @@ public class Main {
         //=====AddVisitedPOIbyUser=====//
         DataBase.userST.get(1).addVisitedPOI(2, new Date(2022, 5, 7, 23, 0, 0));
         DataBase.addLog(new Log(new Date(2022, 5, 7, 23, 0, 0), "Passei no Poi2", DataBase.userST.get(1).getName(), DataBase.poiST.get(2).getIdPoi()), DataBase.poiST.get(2));
+        DataBase.userST.get(1).addVisitedPOI(2, new Date(2022, 5, 7, 17, 0, 0));
+        DataBase.addLog(new Log(new Date(2022, 5, 7, 17, 0, 0), "Passei no Poi2", DataBase.userST.get(1).getName(), DataBase.poiST.get(2).getIdPoi()), DataBase.poiST.get(2));
+        DataBase.userST.get(1).addVisitedPOI(2, new Date(2022, 5, 7, 11, 0, 0));
+        DataBase.addLog(new Log(new Date(2022, 5, 7, 11, 0, 0), "Passei no Poi2", DataBase.userST.get(1).getName(), DataBase.poiST.get(2).getIdPoi()), DataBase.poiST.get(2));
 
         DataBase.userST.get(1).addVisitedPOI(1, new Date(2022, 5, 14, 23, 0, 0));
         DataBase.addLog(new Log(new Date(2022, 5, 14, 23, 0, 0), "askzjfhasfhaujfha", DataBase.userST.get(1).getName(), DataBase.poiST.get(1).getIdPoi()), DataBase.poiST.get(1));
+
+        DataBase.userST.get(1).addVisitedPOI(1, new Date(2022, 5, 15, 18, 0, 0));
+        DataBase.addLog(new Log(new Date(2022, 5, 15, 18, 0, 0), "askzjfhasfhaujfha", DataBase.userST.get(1).getName(), DataBase.poiST.get(1).getIdPoi()), DataBase.poiST.get(1));
 
         DataBase.userST.get(1).addVisitedPOI(4, new Date(2022, 4, 30, 18, 0, 0));
         DataBase.addLog(new Log(new Date(2022, 4, 30, 18, 0, 0), "Visitei o Poi4", DataBase.userST.get(1).getName(), DataBase.poiST.get(4).getIdPoi()), DataBase.poiST.get(4));
 
         DataBase.userST.get(2).addVisitedPOI(2, new Date(1980, 1, 28, 12, 0, 0));
-        DataBase.addLog(new Log(new Date(1980, 1, 28, 12, 0, 0), "Comprar gelados ao mc", DataBase.userST.get(2).getName(), DataBase.poiST.get(2).getIdPoi()), DataBase.poiST.get(2));
+        DataBase.addLog(new Log(new Date(1980, 1, 28, 12, 0, 0), "aodaodoafsdjdjfgd", DataBase.userST.get(2).getName(), DataBase.poiST.get(2).getIdPoi()), DataBase.poiST.get(2));
 
         DataBase.userST.get(2).addVisitedPOI(4, new Date(2022, 5, 19, 10, 0, 0));
         DataBase.addLog(new Log(new Date(2022, 5, 19), "Visitei o Poi4", DataBase.userST.get(2).getName(), DataBase.poiST.get(4).getIdPoi()), DataBase.poiST.get(4));
@@ -43,11 +50,17 @@ public class Main {
         DataBase.addLog(new Log(new Date(2022, 4, 30, 13, 35, 0), "Passei no Poi4", DataBase.userST.get(3).getName(), DataBase.poiST.get(4).getIdPoi()), DataBase.poiST.get(4));
 
         DataBase.userST.get(3).addVisitedPOI(2, new Date(2022, 5, 10, 10, 45, 0));
-        DataBase.addLog(new Log(new Date(2022, 5, 10, 10, 45, 0), "Comprar Panquecas", DataBase.userST.get(3).getName(), DataBase.poiST.get(2).getIdPoi()), DataBase.poiST.get(2));
+        DataBase.addLog(new Log(new Date(2022, 5, 10, 10, 45, 0), "visitei poi2", DataBase.userST.get(3).getName(), DataBase.poiST.get(2).getIdPoi()), DataBase.poiST.get(2));
+
+        DataBase.userST.get(3).addVisitedPOI(2, new Date(2022, 5, 10, 8, 45, 0));
+        DataBase.addLog(new Log(new Date(2022, 5, 10, 8, 45, 0), "visitei poi2", DataBase.userST.get(3).getName(), DataBase.poiST.get(2).getIdPoi()), DataBase.poiST.get(2));
+
+        DataBase.userST.get(4).addVisitedPOI(9,new Date(2022,5,2,19,35,0));
+        DataBase.addLog(new Log(new Date(2022,5,2,19,35,0),"visitei Poi9",DataBase.userST.get(4).getName(),DataBase.poiST.get(9).getIdPoi()),DataBase.poiST.get(9));
+
 
         System.out.println("=======================LOGS=========================");
         //Como exemplo escolhi logs do POI com id 4
-        DataBase.deleteUserST(DataBase.userST.get(1));
         RedBlackBSTProj<Date, Log> logs = DataBase.poiST.get(4).getPoiLog();
         System.out.println("Logs do POI 4 : ");
         for (Date date : logs.keys()) {
@@ -65,6 +78,7 @@ public class Main {
 
         ST<Integer, Poi> userVisited;
         System.out.println("\nRequisito 5.a)");
+        //DataBase.deletePoiST(DataBase.poiST.get(2));
         System.out.println("POI's visitados por " + DataBase.userST.get(1).getName() + ": ");
         DataBase.printIntervaloTempo(dataInicial, dataFinal, subrede);
         userVisited = DataBase.userST.get(1).showVisitedPoi(subrede, dataInicial, dataFinal);
@@ -104,7 +118,11 @@ public class Main {
         DataBase.printIntervaloTempo(dataInicial, dataFinal, subrede);
         Poi.poiNotVisited(dataInicial, dataFinal);
 
-        //DataBase.top5PoiUsedPeriod(dataInicial,dataFinal);
+        System.out.println("\nRequisito 5.e)");
+        DataBase.top5UsersVisitedPoi(dataInicial,dataFinal);
+
+        System.out.println("\nRequisito 5.f)");
+        DataBase.top5PoiUsedPeriod(dataInicial,dataFinal);
 
 
         //=====MetodoNow=====//
@@ -115,7 +133,6 @@ public class Main {
         DataBase.searchTagInNode("traffic_signals");
         System.out.println("\n");
         System.out.println("==========PESQUISATIPOPOI===========");
-        //System.out.println(DataBase.nodeST.get(1).getType());
         DataBase.searchTypeInNode("Fire Hydrant");
         System.out.println("\n");
         System.out.println("==========PESQUISA=DE=TAG=NUMA=WAY==========");
@@ -157,7 +174,7 @@ public class Main {
         System.out.println("\n");
         System.out.println("=============GRAFO=LIDO=DO=FICHEIRO============");
 
-        EdgeWeightedDigraphProj grafo = new EdgeWeightedDigraphProj(DataBase.poiST.size()+1);
+        EdgeWeightedDigraphProj grafo = new EdgeWeightedDigraphProj(InputOutputTxt.nodeNumber + 1);
         for(int i = 1; i <= DataBase.wayST.size(); i++){
            grafo.addEdge(DataBase.wayST.get(i));
         }
@@ -175,6 +192,8 @@ public class Main {
         EdgeWeightedDigraphProj grafo2 = InputOutputTxt.inputGrafoBin();
         System.out.println("=====GRAFO=DO=BINARIO========");
         System.out.println(grafo2);
+
+
 
 
     }

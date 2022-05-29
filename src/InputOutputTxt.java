@@ -7,6 +7,12 @@ import java.util.Arrays;
 
 public class InputOutputTxt implements Serializable{
 
+    public static int nodeNumber;
+
+    /**
+     * Método para ler utilizadores de um ficheiro txt
+     * Ao ler chama o metodo de inserir na ST para ao ler do txt inserir logo na Symbol Table
+     */
     public static void readUserFromFile(){
         String content;
         In input = new In(".//data//InputUser.txt");
@@ -27,7 +33,9 @@ public class InputOutputTxt implements Serializable{
         }
     }
 
-
+    /**
+     * Método usado para escrever a ST de users para um ficheiro de texto
+     */
     public static void writeUserToFile(){
         Out out  = new Out(".//data//OutputUsers.txt");
         out.println(DataBase.userST.size());
@@ -37,6 +45,10 @@ public class InputOutputTxt implements Serializable{
         }
     }
 
+    /**
+     * Método para ler nodes de um ficheiro txt
+     * Ao ler chama o metodo de inserir na ST para ao ler do txt inserir logo na Symbol Table
+     */
     public static void readNodesFromFile() {
         String content;
         In input = new In(".//data//dataset1_nodes.txt");
@@ -45,7 +57,7 @@ public class InputOutputTxt implements Serializable{
         } else {
             while (input.hasNextLine()) {
                 content = input.readLine();
-                int nodeNumber = Integer.parseInt(content);
+                nodeNumber = Integer.parseInt(content);
                 for (int i = 0; i < nodeNumber; i++) {
                     content = input.readLine();
                     String[] inputNode = content.split(",", 8);
@@ -71,6 +83,10 @@ public class InputOutputTxt implements Serializable{
         }
     }
 
+    /**
+     * Metodo para ler ways de um ficheiro txt
+     * Ao ler chama o metodo de inserir na ST para ao ler do txt inserir logo na Symbol Table
+     */
     public static void readWaysFromFile() {
         String content;
         In input = new In(".//data//dataset1_ways_nodepairs.txt");
@@ -103,6 +119,9 @@ public class InputOutputTxt implements Serializable{
         }
     }
 
+    /**
+     * Método usado para escrever a ST de nodes para um ficheiro de texto
+     */
     public static void writeNodesToFile() {
         Out out = new Out(".//data//OutputNodes.txt");
         out.println(DataBase.poiST.size());
@@ -120,6 +139,9 @@ public class InputOutputTxt implements Serializable{
         }
     }
 
+    /**
+     * Método usado para escrever a ST de ways para um ficheiro de texto
+     */
     public static void writeWaysToFile() {
         Out out = new Out(".//data//OutputWays.txt");
         out.println(DataBase.wayST.size());
@@ -137,6 +159,10 @@ public class InputOutputTxt implements Serializable{
         }
     }
 
+    /**
+     * Metodo usado para dar output do grafo para ficheiro txt
+     * @param grafo a enviar
+     */
     public static void outputGrafo(EdgeWeightedDigraphProj grafo){
         Out out = new Out(".//data//OutputGrafo.txt");
         out.println(grafo.V());
@@ -145,6 +171,10 @@ public class InputOutputTxt implements Serializable{
         }
     }
 
+    /**
+     * Método usado para dar output do grafo para ficheiro binário
+     * @param grafo
+     */
     public static void outputGrafoBin(EdgeWeightedDigraphProj grafo){
         File f = new File(".//data//OutputGrafo.bin");
         try{
@@ -156,6 +186,10 @@ public class InputOutputTxt implements Serializable{
         }
     }
 
+    /**
+     * Método usado para dar input ao grafo por ficheiro binário
+     * @return
+     */
     public static EdgeWeightedDigraphProj inputGrafoBin() {
         EdgeWeightedDigraphProj GrafoBin = null;
         File f = new File(".//data//OutputGrafo.bin");
